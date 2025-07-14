@@ -418,6 +418,39 @@ message BatchGetIncrementalGroupMemberResp {
   map<string, getIncrementalGroupMemberResp> respList = 1;
 }
 
+message AddMuteWhitelistReq {
+ string groupID = 1;
+ repeated string userIDs = 2;
+}
+
+message AddMuteWhitelistResp {
+}
+
+message RemoveMuteWhitelistReq {
+  string groupID = 1;
+  repeated string userIDs = 2;
+}
+
+message RemoveMuteWhitelistResp {
+}
+
+message CheckInMuteWhitelistReq {
+  string groupID = 1;
+  string userID = 2;
+}
+
+message CheckInMuteWhitelistResp {
+  bool inWhitelist = 1;
+}
+
+message GetMuteWhitelistUsersReq {
+  string groupID = 1;
+}
+
+message GetMuteWhitelistUsersResp {
+  repeated string userIDs = 1;
+}
+
 service group {
   // Create group
   rpc createGroup(CreateGroupReq) returns (CreateGroupResp);
@@ -494,4 +527,9 @@ service group {
   rpc GetFullGroupMemberUserIDs(GetFullGroupMemberUserIDsReq) returns (GetFullGroupMemberUserIDsResp);
 
   rpc GetFullJoinGroupIDs(GetFullJoinGroupIDsReq) returns (GetFullJoinGroupIDsResp);
+
+  rpc AddMuteWhitelist(AddMuteWhitelistReq) returns (AddMuteWhitelistResp);
+  rpc RemoveMuteWhitelist(RemoveMuteWhitelistReq) returns (RemoveMuteWhitelistResp);
+  rpc CheckInMuteWhitelist(CheckInMuteWhitelistReq) returns (CheckInMuteWhitelistResp);
+  rpc GetMuteWhitelistUsers(GetMuteWhitelistUsersReq) returns (GetMuteWhitelistUsersResp);
 }

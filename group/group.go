@@ -402,6 +402,43 @@ func (x *GetFullJoinGroupIDsReq) Check() error {
 	return nil
 }
 
+func (x *AddMuteWhitelistReq) Check() error {
+	if len(x.GroupID) == 0 {
+		return errors.New("groupID is empty")
+	}
+	if len(x.UserIDs) > constant.ParamMaxLength {
+		return errors.New("too many UserIDs, need to be less than 1000")
+	}
+	return nil
+}
+
+func (x *RemoveMuteWhitelistReq) Check() error {
+	if len(x.GroupID) == 0 {
+		return errors.New("groupID is empty")
+	}
+	if len(x.UserIDs) > constant.ParamMaxLength {
+		return errors.New("too many UserIDs, need to be less than 1000")
+	}
+	return nil
+}
+
+func (x *CheckInMuteWhitelistReq) Check() error {
+	if len(x.GroupID) == 0 {
+		return errors.New("groupID is empty")
+	}
+	if len(x.UserID) == 0 {
+		return errors.New("userID is empty")
+	}
+	return nil
+}
+
+func (x *GetMuteWhitelistUsersReq) Check() error {
+	if len(x.GroupID) == 0 {
+		return errors.New("groupID is empty")
+	}
+	return nil
+}
+
 func (x *BatchGetIncrementalGroupMemberResp) Format() any {
 	if len(x.RespList) > 50 {
 		return fmt.Sprintf("len is %v", len(x.RespList))

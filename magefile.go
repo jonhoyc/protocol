@@ -167,6 +167,7 @@ func GenGo() error {
 	for _, module := range protoModules {
 		args := []string{
 			// "--proto_path=" + filepath.Join(".", module),
+			"--experimental_allow_proto3_optional",
 			"--go_out=" + filepath.Join(".", module),
 			"--go-grpc_out=" + filepath.Join(".", module),
 			"--go_opt=module=github.com/openimsdk/protocol/" + strings.Join([]string{module}, "/"),
