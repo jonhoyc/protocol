@@ -379,6 +379,39 @@ message clientConfig {
   string value = 3;
 }
 
+message setGlobalMuteReq {
+  string userID = 1;
+  int64 muteSeconds = 2;
+}
+
+message setGlobalMuteResp {
+}
+
+message cancelGlobalMuteReq {
+  string userID = 1;
+}
+
+message cancelGlobalMuteResp {
+}
+
+message checkGlobalMutedReq {
+  string userID = 1;
+}
+
+message checkGlobalMutedResp {
+  bool muted = 1;
+  int64 remaining = 2;
+}
+
+message getMutedUsersReq {
+  sdkws.RequestPagination pagination = 1;
+}
+
+message getMutedUsersResp {
+  int32 total = 1;
+  repeated string userIDs = 2;
+}
+
 service user {
   //Get the specified user information full field
   rpc getDesignateUsers(getDesignateUsersReq) returns (getDesignateUsersResp);
@@ -440,4 +473,8 @@ service user {
 
   rpc pageUserClientConfig(pageUserClientConfigReq) returns (pageUserClientConfigResp);
 
+  rpc setGlobalMute(setGlobalMuteReq) returns (setGlobalMuteResp);
+  rpc cancelGlobalMute(cancelGlobalMuteReq) returns (cancelGlobalMuteResp);
+  rpc checkGlobalMuted(checkGlobalMutedReq) returns (checkGlobalMutedResp);
+  rpc getMutedUsers(getMutedUsersReq) returns (getMutedUsersResp);
 }

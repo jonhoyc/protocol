@@ -63,6 +63,10 @@ const (
 	User_SetUserClientConfig_FullMethodName           = "/openim.user.user/setUserClientConfig"
 	User_DelUserClientConfig_FullMethodName           = "/openim.user.user/delUserClientConfig"
 	User_PageUserClientConfig_FullMethodName          = "/openim.user.user/pageUserClientConfig"
+	User_SetGlobalMute_FullMethodName                 = "/openim.user.user/setGlobalMute"
+	User_CancelGlobalMute_FullMethodName              = "/openim.user.user/cancelGlobalMute"
+	User_CheckGlobalMuted_FullMethodName              = "/openim.user.user/checkGlobalMuted"
+	User_GetMutedUsers_FullMethodName                 = "/openim.user.user/getMutedUsers"
 )
 
 // UserClient is the client API for User service.
@@ -122,6 +126,10 @@ type UserClient interface {
 	SetUserClientConfig(ctx context.Context, in *SetUserClientConfigReq, opts ...grpc.CallOption) (*SetUserClientConfigResp, error)
 	DelUserClientConfig(ctx context.Context, in *DelUserClientConfigReq, opts ...grpc.CallOption) (*DelUserClientConfigResp, error)
 	PageUserClientConfig(ctx context.Context, in *PageUserClientConfigReq, opts ...grpc.CallOption) (*PageUserClientConfigResp, error)
+	SetGlobalMute(ctx context.Context, in *SetGlobalMuteReq, opts ...grpc.CallOption) (*SetGlobalMuteResp, error)
+	CancelGlobalMute(ctx context.Context, in *CancelGlobalMuteReq, opts ...grpc.CallOption) (*CancelGlobalMuteResp, error)
+	CheckGlobalMuted(ctx context.Context, in *CheckGlobalMutedReq, opts ...grpc.CallOption) (*CheckGlobalMutedResp, error)
+	GetMutedUsers(ctx context.Context, in *GetMutedUsersReq, opts ...grpc.CallOption) (*GetMutedUsersResp, error)
 }
 
 type userClient struct {
@@ -432,6 +440,46 @@ func (c *userClient) PageUserClientConfig(ctx context.Context, in *PageUserClien
 	return out, nil
 }
 
+func (c *userClient) SetGlobalMute(ctx context.Context, in *SetGlobalMuteReq, opts ...grpc.CallOption) (*SetGlobalMuteResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetGlobalMuteResp)
+	err := c.cc.Invoke(ctx, User_SetGlobalMute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) CancelGlobalMute(ctx context.Context, in *CancelGlobalMuteReq, opts ...grpc.CallOption) (*CancelGlobalMuteResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelGlobalMuteResp)
+	err := c.cc.Invoke(ctx, User_CancelGlobalMute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) CheckGlobalMuted(ctx context.Context, in *CheckGlobalMutedReq, opts ...grpc.CallOption) (*CheckGlobalMutedResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckGlobalMutedResp)
+	err := c.cc.Invoke(ctx, User_CheckGlobalMuted_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetMutedUsers(ctx context.Context, in *GetMutedUsersReq, opts ...grpc.CallOption) (*GetMutedUsersResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMutedUsersResp)
+	err := c.cc.Invoke(ctx, User_GetMutedUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -489,6 +537,10 @@ type UserServer interface {
 	SetUserClientConfig(context.Context, *SetUserClientConfigReq) (*SetUserClientConfigResp, error)
 	DelUserClientConfig(context.Context, *DelUserClientConfigReq) (*DelUserClientConfigResp, error)
 	PageUserClientConfig(context.Context, *PageUserClientConfigReq) (*PageUserClientConfigResp, error)
+	SetGlobalMute(context.Context, *SetGlobalMuteReq) (*SetGlobalMuteResp, error)
+	CancelGlobalMute(context.Context, *CancelGlobalMuteReq) (*CancelGlobalMuteResp, error)
+	CheckGlobalMuted(context.Context, *CheckGlobalMutedReq) (*CheckGlobalMutedResp, error)
+	GetMutedUsers(context.Context, *GetMutedUsersReq) (*GetMutedUsersResp, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -588,6 +640,18 @@ func (UnimplementedUserServer) DelUserClientConfig(context.Context, *DelUserClie
 }
 func (UnimplementedUserServer) PageUserClientConfig(context.Context, *PageUserClientConfigReq) (*PageUserClientConfigResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PageUserClientConfig not implemented")
+}
+func (UnimplementedUserServer) SetGlobalMute(context.Context, *SetGlobalMuteReq) (*SetGlobalMuteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetGlobalMute not implemented")
+}
+func (UnimplementedUserServer) CancelGlobalMute(context.Context, *CancelGlobalMuteReq) (*CancelGlobalMuteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelGlobalMute not implemented")
+}
+func (UnimplementedUserServer) CheckGlobalMuted(context.Context, *CheckGlobalMutedReq) (*CheckGlobalMutedResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckGlobalMuted not implemented")
+}
+func (UnimplementedUserServer) GetMutedUsers(context.Context, *GetMutedUsersReq) (*GetMutedUsersResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMutedUsers not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -1150,6 +1214,78 @@ func _User_PageUserClientConfig_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_SetGlobalMute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetGlobalMuteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SetGlobalMute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SetGlobalMute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SetGlobalMute(ctx, req.(*SetGlobalMuteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_CancelGlobalMute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelGlobalMuteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).CancelGlobalMute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_CancelGlobalMute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).CancelGlobalMute(ctx, req.(*CancelGlobalMuteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_CheckGlobalMuted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckGlobalMutedReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).CheckGlobalMuted(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_CheckGlobalMuted_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).CheckGlobalMuted(ctx, req.(*CheckGlobalMutedReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetMutedUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMutedUsersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetMutedUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetMutedUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetMutedUsers(ctx, req.(*GetMutedUsersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1276,6 +1412,22 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "pageUserClientConfig",
 			Handler:    _User_PageUserClientConfig_Handler,
+		},
+		{
+			MethodName: "setGlobalMute",
+			Handler:    _User_SetGlobalMute_Handler,
+		},
+		{
+			MethodName: "cancelGlobalMute",
+			Handler:    _User_CancelGlobalMute_Handler,
+		},
+		{
+			MethodName: "checkGlobalMuted",
+			Handler:    _User_CheckGlobalMuted_Handler,
+		},
+		{
+			MethodName: "getMutedUsers",
+			Handler:    _User_GetMutedUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
